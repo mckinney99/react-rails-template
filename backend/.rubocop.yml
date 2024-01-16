@@ -1,0 +1,21 @@
+# .rubocop.yml
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "db/schema.rb"
+    - "Gemfile"
+    - "lib/tasks/*.rake"
+    - "bin/*"
+    - "config/*"
+    - "lib/*"
+    - "tmp/*"
+    - "vendor/*"
+    - "spec/spec_helper.rb"
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/GlobalStdStream:
+  Enabled: false

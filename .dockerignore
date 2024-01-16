@@ -1,0 +1,40 @@
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore default patterns
+.dockerignore
+.dockerignore.example
+.git
+.gitignore
+
+# Ignore unnecessary files and directories for Docker build context
+node_modules
+log/*
+tmp/*
+*.log
+*.pid
+*.seed
+*.sqlite3
+*.sql
+*.db
+*.gz
+*.zip
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.swp
+*~
+
+# Ignore any other files not needed for the Docker image
+# Adjust these patterns based on your specific project structure
+!rr-template/
+rr-template/node_modules
+# !rr-template/Gemfile
+!rr-template/Gemfile.lock
+!rr-template/package.json
+!rr-template/yarn.lock
+rr-template/log
+rr-template/tmp

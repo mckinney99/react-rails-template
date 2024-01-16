@@ -1,5 +1,3 @@
---- TODO ----
-
 Current functionality.
 - Currently, logging in and siging up work, but nothing changes once a user is signed in.
 - Any visitor can create a 'message' using the contact form on the frontend. See how messages are being implemented to get an idea of how Redux and Rails are working together. We want to follow this pattern going forward when adding additional features.

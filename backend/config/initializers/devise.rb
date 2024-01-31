@@ -11,7 +11,7 @@
 Devise.setup do |config|
 
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
+    jwt.secret = '5b78ff29dd591ac63b6323a96341ad3b6bde31850c62a5d274b233d4a15f922f2b74372f49a152d4cc653c25685520075a88bea698c5d5240df59dba521b1d37'
     jwt.dispatch_requests = [
       ['POST', %r{^/login$}]
     ]
@@ -250,7 +250,7 @@ Devise.setup do |config|
   # stretches to 10, and copy REST_AUTH_SITE_KEY to pepper).
   #
   # Require the `devise-encryptable` gem when using anything other than bcrypt
-  config.encryptor = :sha512
+  # config.encryptor = :sha512
 
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for

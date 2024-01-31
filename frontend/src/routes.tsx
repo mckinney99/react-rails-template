@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/home';
-import SignUp from './pages/signUp';
+import Home from './pages/Home';
+import SignUp from './pages/SignUp';
 import ContactFormPage from './pages/ContactFormPage';
 import { RootState } from './store';
 import Admin from './pages/Admin';

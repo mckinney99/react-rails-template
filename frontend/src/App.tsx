@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import AppRoutes from './routes';
-import NavigationMenu from './components/navigationMenu';
+import NavigationMenu from './components/NavigationMenu';
 import Footer from './components/Footer';
 import { Box, Flex } from '@chakra-ui/react';
 

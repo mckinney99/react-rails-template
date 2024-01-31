@@ -7,6 +7,8 @@ services:
     environment:
       POSTGRES_PASSWORD: password
     working_dir: /
+    ports:
+      - "5432:5432"
   backend:
     build: backend
     image: rails-backend

@@ -95,8 +95,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-encryptable (0.2.0)
-      devise (>= 2.1.0)
     devise-jwt (0.11.0)
       devise (~> 4.0)
       warden-jwt_auth (~> 0.8)
@@ -151,6 +149,8 @@ GEM
     nokogiri (1.15.5-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.15.5-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.15.5-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (1.23.0)
@@ -250,12 +250,12 @@ GEM
 PLATFORMS
   arm64-darwin-22
   x86_64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
   debug
   devise
-  devise-encryptable
   devise-jwt
   jsonapi-serializer
   pg (~> 1.1)

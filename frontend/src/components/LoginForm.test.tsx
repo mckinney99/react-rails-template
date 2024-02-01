@@ -3,13 +3,15 @@ import LoginForm from './LoginForm';
 import render from '../mocks/render';
 import userEvent from '@testing-library/user-event';
 import { act } from '@testing-library/react';
+import userApi from '../apis/userApi'
 
 const mockApiCall = jest.fn();
 jest.mock('../apis/userApi', () => ({
   postLogin: () => mockApiCall().mockResolvedValue({ data: {} }),
 }));
-
 describe('LoginForm', () => {
+  
+
   test('renders login form', () => {
     const { getByRole } = render(<LoginForm />);
     const emailField = getByRole('textbox', {
@@ -22,7 +24,7 @@ describe('LoginForm', () => {
     expect(passwordField).toBeInTheDocument();
   });
 
-  test.only('calls login function when user submits login form', async () => {
+  test('calls login function when user submits login form', async () => {
     jest.spyOn(window, 'alert').mockImplementation(() => {});
 
     const { findByRole } = render(<LoginForm />);
@@ -40,4 +42,34 @@ describe('LoginForm', () => {
     await act(async () => await userEvent.click(submitButton));
     expect(mockApiCall).toBeCalled();
   });
+
+  test('successful login', async ()=>{
+    jest.spyOn(userApi, 'postLogin').mockResolvedValue({data: {}})
+
+    const { findByRole, queryByTestId } = render(<LoginForm />);
+    const submitButton = await findByRole('button', {
+      name: /submit/i,
+    });
+
+    const errorContainer = queryByTestId("error-container")
+    await act(async () => await userEvent.click(submitButton));
+    expect(errorContainer).not.toBeInTheDocument()
+  })
+
+  test('failed login', async ()=>{
+    jest.spyOn(userApi, 'postLogin').mockRejectedValue(new Error("Error"))
+
+
+    const { findByRole, findByTestId } = render(<LoginForm />);
+    const submitButton = await findByRole('button', {
+      name: /submit/i,
+    });
+
+    await act(async () => await userEvent.click(submitButton));
+    act( async ()=>{
+      const errorContainer = await findByTestId("error-container")
+      expect(errorContainer).toBeInTheDocument()
+
+    })
+  })
 });

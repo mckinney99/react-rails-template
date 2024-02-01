@@ -12,6 +12,8 @@ const blankForm = {
 };
 const LoginForm: React.FC = () => {
   const [newLogin, setNewLogin] = useState<any>(blankForm);
+  const [errorMsg, setErrorMsg] = useState<string | null>();
+
   const dispatch = useAppDispatch();
 
   const handlePostLogin = async () => {
@@ -19,19 +21,20 @@ const LoginForm: React.FC = () => {
       const createdSession = await userApi.postLogin(newLogin);
       // we can do something with createdSession if we want
       setNewLogin(blankForm);
-      log({ createdSession: createdSession });
 
       //ts-ignore
       dispatch(login(createdSession.data));
+      setErrorMsg(null);
       alert('Sign in successful!');
     } catch (error) {
-      alert('Sign in failed. Please try again.');
+      setErrorMsg('Sign in failed. Please try again.')
     }
   };
 
   return (
     <>
       <FormControl pb="5">
+        { errorMsg ? <div test-id="error-container" style={{color: "red"}}>{errorMsg}</div> : null}
         <FormLabel color="black">Email</FormLabel>
         <Input
           color="black"

@@ -17,7 +17,7 @@ const blankMessage = {
   body: '',
 };
 
-const contactForm: React.FC = () => {
+const ContactForm: React.FC = () => {
   const [newMessage, setNewMessage] = useState<Message>(blankMessage);
 
   const handlePostMessage = async () => {
@@ -67,4 +67,4 @@ const contactForm: React.FC = () => {
   );
 };
 
-export default contactForm;
+export default ContactForm;

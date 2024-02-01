@@ -63,12 +63,14 @@ const userApi = {
     }
   },
 
-  postLogin: async (credentials: User) => {
+  postLogin: async (credentials: User):Promise<any> => {
     try {
       const response: AxiosResponse<User> = await axios.post(
         `${BASE_URL}/login`,
         credentials
       );
+      console.log(response);
+      
       return response.data;
     } catch (error) {
       handleError();

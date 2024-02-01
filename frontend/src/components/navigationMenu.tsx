@@ -18,20 +18,20 @@ import {
   PopoverHeader,
   PopoverFooter,
   Center,
-  Link as ChakraLink, 
-  LinkProps
+  Link as ChakraLink,
+  LinkProps,
 } from '@chakra-ui/react';
-import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ReactRouterLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import LoginForm from './loginForm'
+import LoginForm from './LoginForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
 const NavigationMenu: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const user = useSelector((state: RootState) => state.auth.user)
+  const user = useSelector((state: RootState) => state.auth.user);
 
-  const loginText = user ? 'Sign out' : 'Sign in'
+  const loginText = user ? 'Sign out' : 'Sign in';
 
   const signInModal = (
     <Popover>
@@ -44,20 +44,26 @@ const NavigationMenu: React.FC = () => {
         <PopoverBody>
           <LoginForm />
         </PopoverBody>
-        <PopoverFooter textAlign='center'>
-          <ChakraLink as={ReactRouterLink} to='/sign-up' color='black' fontWeight='bold' _hover={{ textDecoration: 'none' }}>
+        <PopoverFooter textAlign="center">
+          <ChakraLink
+            as={ReactRouterLink}
+            to="/sign-up"
+            color="black"
+            fontWeight="bold"
+            _hover={{ textDecoration: 'none' }}
+          >
             Create a new account
           </ChakraLink>
         </PopoverFooter>
       </PopoverContent>
     </Popover>
-  )
+  );
 
   return (
-    <Center bg="blue.500" color="white" p={4} display='flex'>
+    <Center bg="blue.500" color="white" p={4} display="flex">
       <Text ml={10} fontSize="xl" fontWeight="bold">
         Your Logo
-      </Text>        
+      </Text>
       <Spacer />
       <Flex
         display={{ base: 'none', md: 'flex' }}
@@ -65,7 +71,12 @@ const NavigationMenu: React.FC = () => {
         color="white"
         mr={10}
       >
-        <ChakraLink as={ReactRouterLink} to='/' mr={12} _hover={{ textDecoration: 'none' }}>
+        <ChakraLink
+          as={ReactRouterLink}
+          to="/"
+          mr={12}
+          _hover={{ textDecoration: 'none' }}
+        >
           Home
         </ChakraLink>
         <ChakraLink mr={12} _hover={{ textDecoration: 'none' }}>
@@ -74,7 +85,13 @@ const NavigationMenu: React.FC = () => {
         <ChakraLink mr={12} _hover={{ textDecoration: 'none' }}>
           Services
         </ChakraLink>
-        <ChakraLink mr={12} _hover={{ textDecoration: 'none' }}>
+
+        <ChakraLink
+          as={ReactRouterLink}
+          to="/contact"
+          mr={12}
+          _hover={{ textDecoration: 'none' }}
+        >
           Contact
         </ChakraLink>
         {signInModal}

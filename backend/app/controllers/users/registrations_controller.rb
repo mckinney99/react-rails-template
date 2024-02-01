@@ -7,6 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def respond_with(resource, _opts = {})
+    print resource
     if request.method == "POST" && resource.persisted?
       render json: {
         status: {code: 200, message: "Signed up sucessfully."},
@@ -21,5 +22,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
         status: {code: 422, message: "User couldn't be created successfully. #{resource.errors.full_messages.to_sentence}"}
       }, status: :unprocessable_entity
     end
+  end
+
+  def sign_up_params
+    # Permit the "role" parameter in addition to the default parameters
+    params.require(:user).permit(:email, :password, :role)
   end
 end

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import AppRoutes from './routes';
 import NavigationMenu from './components/navigationMenu';
-import Footer from './components/footer';
+import Footer from './components/Footer';
 import { Box, Flex } from '@chakra-ui/react';
 
 function App() {

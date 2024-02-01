@@ -1,12 +1,12 @@
 import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import userApi, { User, parentUser } from '../apis/userApi';
+import userApi from '../apis/userApi';
 import { useAppDispatch } from '../hooks';
 import { login } from '../features/users/authSlice';
 const { log } = console;
 const blankForm = {
   user: {
-    email: 'test1@test.com',
+    email: 'admin9@test.com',
     password: 'testpassword',
   },
 };
@@ -19,9 +19,10 @@ const LoginForm: React.FC = () => {
       const createdSession = await userApi.postLogin(newLogin);
       // we can do something with createdSession if we want
       setNewLogin(blankForm);
-      log({ newLogin });
+      log({ createdSession: createdSession });
 
-      dispatch(login(newLogin));
+      //ts-ignore
+      dispatch(login(createdSession.data));
       alert('Sign in successful!');
     } catch (error) {
       alert('Sign in failed. Please try again.');
@@ -50,6 +51,7 @@ const LoginForm: React.FC = () => {
           color="black"
           type="password"
           placeholder="Password"
+          role="password"
           value={newLogin.user.password}
           onChange={(e) =>
             setNewLogin({

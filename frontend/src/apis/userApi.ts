@@ -35,7 +35,12 @@ export interface LogoutAction {
   type: 'LOGOUT';
 }
 
-const handleError = () => {"There was an error"}
+const handleError = () => {
+  "There was an error"
+}
+const getToken = (): string|null => 
+    localStorage.getItem('token')
+
 
 const userApi = {
   getCurrentUser: async () => {
@@ -71,7 +76,7 @@ const userApi = {
       );
       console.log(response);
       
-      return response.data;
+      return response;
     } catch (error) {
       handleError();
       throw error;
@@ -79,12 +84,17 @@ const userApi = {
   },
 
   deleteLogOut: async () => {
+    console.log('logging user out')
     try {
       const response: AxiosResponse<User> = await axios.delete(
-        `${BASE_URL}/logout`
+        `${BASE_URL}/logout`, 
+        { headers : {
+          Authorization: 'Bearer ' + getToken()
+        }}
       );
       return response.data;
     } catch (error) {
+      console.log(error)
       handleError();
       throw error;
     }

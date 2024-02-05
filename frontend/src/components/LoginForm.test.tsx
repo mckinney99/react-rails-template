@@ -2,16 +2,14 @@ import React from 'react';
 import LoginForm from './LoginForm';
 import render from '../mocks/render';
 import userEvent from '@testing-library/user-event';
-import { act } from '@testing-library/react';
-import userApi from '../apis/userApi'
+import { act, waitFor } from '@testing-library/react';
+import userApi from '../apis/userApi';
 
 const mockApiCall = jest.fn();
 jest.mock('../apis/userApi', () => ({
   postLogin: () => mockApiCall().mockResolvedValue({ data: {} }),
 }));
 describe('LoginForm', () => {
-  
-
   test('renders login form', () => {
     const { getByRole } = render(<LoginForm />);
     const emailField = getByRole('textbox', {
@@ -43,33 +41,28 @@ describe('LoginForm', () => {
     expect(mockApiCall).toBeCalled();
   });
 
-  test('successful login', async ()=>{
-    jest.spyOn(userApi, 'postLogin').mockResolvedValue({data: {}})
+  test('successful login', async () => {
+    jest.spyOn(userApi, 'postLogin').mockResolvedValue({ data: {} });
 
     const { findByRole, queryByTestId } = render(<LoginForm />);
     const submitButton = await findByRole('button', {
       name: /submit/i,
     });
 
-    const errorContainer = queryByTestId("error-container")
+    const errorContainer = queryByTestId('error-container');
     await act(async () => await userEvent.click(submitButton));
-    expect(errorContainer).not.toBeInTheDocument()
-  })
+    expect(errorContainer).not.toBeInTheDocument();
+  });
 
-  test('failed login', async ()=>{
-    jest.spyOn(userApi, 'postLogin').mockRejectedValue(new Error("Error"))
+  test('failed login', async () => {
+    jest.spyOn(userApi, 'postLogin').mockRejectedValue(new Error('Error'));
 
-
-    const { findByRole, findByTestId } = render(<LoginForm />);
+    const { findByRole } = render(<LoginForm />);
     const submitButton = await findByRole('button', {
       name: /submit/i,
     });
 
     await act(async () => await userEvent.click(submitButton));
-    act( async ()=>{
-      const errorContainer = await findByTestId("error-container")
-      expect(errorContainer).toBeInTheDocument()
-
-    })
-  })
+    waitFor(async () => expect(await findByRole('alert')).toBeInTheDocument());
+  });
 });

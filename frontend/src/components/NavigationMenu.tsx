@@ -15,28 +15,36 @@ import {
   PopoverBody,
   PopoverCloseButton,
   PopoverContent,
-  PopoverHeader,
   PopoverFooter,
   Center,
   Link as ChakraLink,
-  LinkProps,
 } from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import LoginForm from './LoginForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import userApi from '../apis/userApi';
+import { useAppDispatch } from '../hooks';
+import { logout } from '../features/users/authSlice';
 
 const NavigationMenu: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state: RootState) => state.auth.user);
-
-  const loginText = user ? 'Sign out' : 'Sign in';
+  const handleSignOut = async () => {
+    try {
+      await userApi.deleteLogOut();
+      dispatch(logout());
+    } catch (error) {
+      alert('Sign out failed.');
+    }
+  };
 
   const signInModal = (
     <Popover>
       <PopoverTrigger>
-        <Button>{loginText}</Button>
+        <Button>Sign in</Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
@@ -94,7 +102,11 @@ const NavigationMenu: React.FC = () => {
         >
           Contact
         </ChakraLink>
-        {signInModal}
+        {!user ? (
+          signInModal
+        ) : (
+          <Button onClick={handleSignOut}>Sign out</Button>
+        )}
       </Flex>
       <IconButton
         aria-label="Open menu"

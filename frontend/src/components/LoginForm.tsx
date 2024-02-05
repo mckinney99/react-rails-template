@@ -1,9 +1,15 @@
-import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Alert,
+  AlertIcon,
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
 import userApi from '../apis/userApi';
 import { useAppDispatch } from '../hooks';
 import { login } from '../features/users/authSlice';
-const { log } = console;
 const blankForm = {
   user: {
     email: 'admin9@test.com',
@@ -12,7 +18,7 @@ const blankForm = {
 };
 const LoginForm: React.FC = () => {
   const [newLogin, setNewLogin] = useState<any>(blankForm);
-  const [errorMsg, setErrorMsg] = useState<string | null>();
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const dispatch = useAppDispatch();
 
@@ -23,18 +29,27 @@ const LoginForm: React.FC = () => {
       setNewLogin(blankForm);
 
       //ts-ignore
-      dispatch(login(createdSession.data));
+      const token = createdSession.headers.authorization.split(' ')[1];
+      localStorage.setItem('token', token);
+      console.log(token);
+
+      dispatch(login(createdSession.data.data));
       setErrorMsg(null);
       alert('Sign in successful!');
     } catch (error) {
-      setErrorMsg('Sign in failed. Please try again.')
+      setErrorMsg('Sign in failed. Please try again.');
     }
   };
 
   return (
     <>
       <FormControl pb="5">
-        { errorMsg ? <div test-id="error-container" style={{color: "red"}}>{errorMsg}</div> : null}
+        {errorMsg ? (
+          <Alert test-id="error-container" status="error">
+            <AlertIcon />
+            {errorMsg}
+          </Alert>
+        ) : null}
         <FormLabel color="black">Email</FormLabel>
         <Input
           color="black"

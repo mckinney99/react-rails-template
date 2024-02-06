@@ -38,7 +38,7 @@ describe('LoginForm', () => {
     await act(async () => await userEvent.type(emailField, 'test@test.com'));
     await act(async () => await userEvent.type(passwordField, 'testPassword'));
     await act(async () => await userEvent.click(submitButton));
-    expect(mockApiCall).toBeCalled();
+    waitFor(() => expect(mockApiCall).toBeCalled());
   });
 
   test('successful login', async () => {

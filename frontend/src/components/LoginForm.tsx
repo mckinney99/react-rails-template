@@ -7,30 +7,38 @@ import {
   AlertIcon,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import userApi from '../apis/userApi';
+import userApi, { User, parentUser } from '../apis/userApi';
 import { useAppDispatch } from '../hooks';
 import { login } from '../features/users/authSlice';
 import { useNavigate } from 'react-router-dom';
-const blankForm = {
+import * as Yup from 'yup';
+import { Formik, Field, ErrorMessage, FormikHelpers, Form } from 'formik';
+import NestedFormErrorMessage from './NestedFormErrorMessage';
+
+const blankForm: parentUser = {
   user: {
     email: 'admin9@test.com',
     password: 'testpassword',
   },
 };
 const LoginForm: React.FC = () => {
-  const [newLogin, setNewLogin] = useState<any>(blankForm);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const handlePostLogin = async () => {
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email address').required('Required'),
+    password: Yup.string().required('Required'),
+  });
+  const handleSubmit = async (
+    values: User,
+    { setSubmitting }: FormikHelpers<User>
+  ): Promise<void> => {
     try {
-      const createdSession = await userApi.postLogin(newLogin);
-      // we can do something with createdSession if we want
-      setNewLogin(blankForm);
+      const createdSession = await userApi.postLogin({ user: values });
+      // Do something with createdSession if needed
+      setSubmitting(false);
 
-      //ts-ignore
       const token = createdSession.headers.authorization.split(' ')[1];
       localStorage.setItem('token', token);
 
@@ -44,46 +52,44 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <>
-      <FormControl pb="5">
+    <Formik
+      initialValues={blankForm.user}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form>
         {errorMsg ? (
           <Alert test-id="error-container" status="error">
             <AlertIcon />
             {errorMsg}
           </Alert>
         ) : null}
-        <FormLabel color="black">Email</FormLabel>
-        <Input
-          color="black"
-          placeholder="name@email.com"
-          type="email"
-          value={newLogin.user.email}
-          onChange={(e) =>
-            setNewLogin({
-              ...newLogin,
-              user: { ...newLogin.user, email: e.target.value },
-            })
-          }
-        />
-      </FormControl>
-      <FormControl pb="5">
-        <FormLabel color="black">Password</FormLabel>
-        <Input
-          color="black"
-          type="password"
-          placeholder="Password"
-          role="password"
-          value={newLogin.user.password}
-          onChange={(e) =>
-            setNewLogin({
-              ...newLogin,
-              user: { ...newLogin.user, password: e.target.value },
-            })
-          }
-        />
-      </FormControl>
-      <Button onClick={handlePostLogin}>Submit</Button>
-    </>
+        <FormControl pb="5">
+          <FormLabel color="black">Email</FormLabel>
+          <ErrorMessage name="email" component={NestedFormErrorMessage} />
+          <Field
+            as={Input}
+            name="email"
+            type="email"
+            color="black"
+            placeholder="name@email.com"
+          />
+        </FormControl>
+        <FormControl pb="5">
+          <FormLabel color="black">Password</FormLabel>
+          <ErrorMessage name="password" component={NestedFormErrorMessage} />
+          <Field
+            as={Input}
+            name="password"
+            type="password"
+            color="black"
+            placeholder="Password"
+            role="password"
+          />
+        </FormControl>
+        <Button type="submit">Submit</Button>
+      </Form>
+    </Formik>
   );
 };
 

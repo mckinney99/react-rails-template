@@ -15,7 +15,7 @@ export interface User {
 }
 
 export interface parentUser {
-  User: User;
+  user: User;
 }
 
 //
@@ -69,7 +69,7 @@ const userApi = {
     }
   },
 
-  postLogin: async (credentials: User):Promise<any> => {
+  postLogin: async (credentials: parentUser):Promise<any> => {
     try {
       const response: AxiosResponse<User> = await axios.post(
         `${BASE_URL}/login`,

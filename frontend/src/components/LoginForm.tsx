@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import userApi from '../apis/userApi';
 import { useAppDispatch } from '../hooks';
 import { login } from '../features/users/authSlice';
+import { useNavigate } from 'react-router-dom';
 const blankForm = {
   user: {
     email: 'admin9@test.com',
@@ -20,6 +21,7 @@ const LoginForm: React.FC = () => {
   const [newLogin, setNewLogin] = useState<any>(blankForm);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handlePostLogin = async () => {
@@ -31,11 +33,11 @@ const LoginForm: React.FC = () => {
       //ts-ignore
       const token = createdSession.headers.authorization.split(' ')[1];
       localStorage.setItem('token', token);
-      console.log(token);
 
       dispatch(login(createdSession.data.data));
       setErrorMsg(null);
       alert('Sign in successful!');
+      navigate('/');
     } catch (error) {
       setErrorMsg('Sign in failed. Please try again.');
     }
@@ -54,6 +56,7 @@ const LoginForm: React.FC = () => {
         <Input
           color="black"
           placeholder="name@email.com"
+          type="email"
           value={newLogin.user.email}
           onChange={(e) =>
             setNewLogin({

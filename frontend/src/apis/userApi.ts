@@ -19,7 +19,7 @@ export interface parentUser {
 }
 
 //
-interface Roles {
+export interface Roles {
   admin: string;
   employee: string;
   customer_enterprise: string;
@@ -75,7 +75,6 @@ const userApi = {
         `${BASE_URL}/login`,
         credentials
       );
-      console.log(response);
       
       return response;
     } catch (error) {
@@ -85,7 +84,6 @@ const userApi = {
   },
 
   deleteLogOut: async () => {
-    console.log('logging user out')
     try {
       const response: AxiosResponse<User> = await axios.delete(
         `${BASE_URL}/logout`, 

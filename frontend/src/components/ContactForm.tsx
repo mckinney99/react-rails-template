@@ -5,6 +5,8 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import messageApi, { Message } from '../apis/messageApi';
@@ -19,26 +21,34 @@ const blankMessage = {
 
 const ContactForm: React.FC = () => {
   const [newMessage, setNewMessage] = useState<Message>(blankMessage);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handlePostMessage = async () => {
     try {
       const createdMessage = await messageApi.postMessage(newMessage);
-      console.log({ createdMessage });
 
       setNewMessage(blankMessage);
       // Do something with the createdMessage if needed
     } catch (error) {
       console.error('Error creating message:', error);
-      // Handle errors
+      setErrorMsg('Error creating message. Please try again.');
     }
   };
 
   return (
     <>
       <FormControl isRequired pb="5">
+        {errorMsg ? (
+          <Alert test-id="error-container" status="error">
+            <AlertIcon />
+            {errorMsg}
+          </Alert>
+        ) : null}
         <FormLabel>Email</FormLabel>
         <Input
+          required
           placeholder="name@email.com"
+          type="email"
           value={newMessage.senderEmail}
           onChange={(e) =>
             setNewMessage({ ...newMessage, senderEmail: e.target.value })
@@ -48,6 +58,7 @@ const ContactForm: React.FC = () => {
       <FormControl pb="5">
         <FormLabel>Subject</FormLabel>
         <Input
+          required
           placeholder="Subject"
           value={newMessage.subject}
           onChange={(e) =>
@@ -56,6 +67,7 @@ const ContactForm: React.FC = () => {
         />
       </FormControl>
       <Textarea
+        required
         mb="5"
         value={newMessage.body}
         onChange={(e) => setNewMessage({ ...newMessage, body: e.target.value })}

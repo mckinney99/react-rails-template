@@ -19,7 +19,7 @@ import {
   Center,
   Link as ChakraLink,
 } from '@chakra-ui/react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import LoginForm from './LoginForm';
 import { useSelector } from 'react-redux';
@@ -32,10 +32,12 @@ const NavigationMenu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = useSelector((state: RootState) => state.auth.user);
+  const navigate = useNavigate();
   const handleSignOut = async () => {
     try {
       await userApi.deleteLogOut();
       dispatch(logout());
+      navigate('/login');
     } catch (error) {
       alert('Sign out failed.');
     }
@@ -86,6 +88,14 @@ const NavigationMenu: React.FC = () => {
           _hover={{ textDecoration: 'none' }}
         >
           Home
+        </ChakraLink>
+        <ChakraLink
+          as={ReactRouterLink}
+          to="/admin"
+          mr={12}
+          _hover={{ textDecoration: 'none' }}
+        >
+          Admin
         </ChakraLink>
         <ChakraLink mr={12} _hover={{ textDecoration: 'none' }}>
           About

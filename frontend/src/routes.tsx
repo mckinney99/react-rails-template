@@ -3,19 +3,23 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import ContactFormPage from './pages/ContactFormPage';
-import { RootState } from './store';
 import Admin from './pages/Admin';
-import { useAppSelector } from './hooks';
+import RequireAuth from './components/RequireAuth';
+import LoginForm from './components/LoginForm';
 
 export default function AppRoutes() {
-  const user = useAppSelector((state: RootState) => state.auth.user);
-
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route element={<RequireAuth />}>
+        <Route path="/" element={<Home />} />
+      </Route>
       <Route path="/contact" element={<ContactFormPage />} />
       <Route path="/sign-up" element={<SignUp />} />
-      {user?.role?.admin ? <Route path="/admin" element={<Admin />} /> : null}
+      <Route path="/login" element={<LoginForm />} />
+      <Route element={<RequireAuth role={'admin'} />}>
+        <Route path="/admin" element={<Admin />} />
+      </Route>
+      {/* {user?.role?.admin ? <Route path="/admin" element={<Admin />} /> : null} */}
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

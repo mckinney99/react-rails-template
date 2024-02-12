@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import axiosWithAuth from './axiosWithAuth';
 
 const BASE_URL = 'http://localhost:3000/api/v1/messages'; // Replace with your API base URL
 
@@ -28,7 +29,7 @@ const messageApi = {
   // Get all messages
   getAllMessages: async (): Promise<Message[]> => {
     try {
-      const response: AxiosResponse<Message[]> = await axios.get(BASE_URL);
+      const response: AxiosResponse<Message[]> = await axiosWithAuth.get(BASE_URL);
       return response.data;
     } catch (error) {
       handleError();

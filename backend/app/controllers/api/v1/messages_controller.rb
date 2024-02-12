@@ -1,4 +1,7 @@
 class Api::V1::MessagesController < ApplicationController
+  
+  before_action :authenticate_user!, except: [:create]
+
   before_action :set_message, only: [:show, :update, :destroy]
 
   # GET /api/v1/messages

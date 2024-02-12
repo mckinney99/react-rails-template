@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import axiosWithAuth from './axiosWithAuth';
 
 const BASE_URL = 'http://localhost:3000'; // Replace with your API base URL
 
@@ -29,7 +30,7 @@ export interface Roles {
 
 export interface LoginAction {
   type: 'LOGIN';
-  payload: User; 
+  payload: User;
 }
 
 export interface LogoutAction {
@@ -37,10 +38,9 @@ export interface LogoutAction {
 }
 
 const handleError = () => {
-  "There was an error"
-}
-const getToken = (): string|null => 
-    localStorage.getItem('token')
+  'There was an error';
+};
+const destroyToken = () => localStorage.removeItem('token');
 
 
 const userApi = {
@@ -69,13 +69,13 @@ const userApi = {
     }
   },
 
-  postLogin: async (credentials: parentUser):Promise<any> => {
+  postLogin: async (credentials: parentUser): Promise<any> => {
     try {
       const response: AxiosResponse<User> = await axios.post(
         `${BASE_URL}/login`,
         credentials
       );
-      
+
       return response;
     } catch (error) {
       handleError();
@@ -85,15 +85,13 @@ const userApi = {
 
   deleteLogOut: async () => {
     try {
-      const response: AxiosResponse<User> = await axios.delete(
-        `${BASE_URL}/logout`, 
-        { headers : {
-          Authorization: 'Bearer ' + getToken()
-        }}
-      );
+      const response: AxiosResponse<User> = await axiosWithAuth.delete(`${BASE_URL}/logout`);
+      if (response.status === 200) {
+        destroyToken();
+      }
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       handleError();
       throw error;
     }

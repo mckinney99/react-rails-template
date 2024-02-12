@@ -11,7 +11,7 @@
 Devise.setup do |config|
 
   config.jwt do |jwt|
-    jwt.secret = '5b78ff29dd591ac63b6323a96341ad3b6bde31850c62a5d274b233d4a15f922f2b74372f49a152d4cc653c25685520075a88bea698c5d5240df59dba521b1d37'
+    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY'] || '5b78ff29dd591ac63b6323a96341ad3b6bde31850c62a5d274b233d4a15f922f2b74372f49a152d4cc653c25685520075a88bea698c5d5240df59dba521b1d37'
     jwt.dispatch_requests = [
       ['POST', %r{^/login$}]
     ]
@@ -26,7 +26,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.secret_key = '5b78ff29dd591ac63b6323a96341ad3b6bde31850c62a5d274b233d4a15f922f2b74372f49a152d4cc653c25685520075a88bea698c5d5240df59dba521b1d37'
+  # config.secret_key = '5b78ff29dd591ac63b6323a96341ad3b6bde31850c62a5d274b233d4a15f922f2b74372f49a152d4cc653c25685520075a88bea698c5d5240df59dba521b1d37'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.

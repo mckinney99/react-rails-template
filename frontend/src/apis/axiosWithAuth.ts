@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 
 const axiosWithAuth: AxiosInstance = axios.create();
 
-const getToken = (): string | null => localStorage.getItem('token');
+export const getToken = (): string | null => localStorage.getItem('token');
 
 axiosWithAuth.interceptors.request.use(
   (config) => {

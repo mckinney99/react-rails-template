@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { RootState } from '../store';
-import { User, Roles } from '../apis/userApi';
+import userApi, { User, Roles } from '../apis/userApi';
+import { getToken } from '../apis/axiosWithAuth';
+import { login } from '../features/users/authSlice';
 
 interface RequireAuthProps {
   role?:
@@ -20,7 +22,30 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ role = null }) => {
   );
   const userRoles: Roles | undefined = user?.role;
   const location = useLocation();
-  console.log({ user });
+  const dispatch = useAppDispatch();
+  const authToken = getToken();
+  const [, setLoading] = useState(true);
+
+  useEffect(() => {
+    const setUserData = async () => {
+      try {
+        const data = await userApi.getCurrentUser();
+        if (data) {
+          dispatch(login(data));
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (!user && authToken) {
+      setUserData();
+    } else {
+      setLoading(false);
+    }
+  }, [authToken, user, dispatch]);
 
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
@@ -35,6 +60,7 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ role = null }) => {
       return <Navigate to="/404" state={{ from: location }} replace />;
     }
   }
+
   return <Outlet />;
 };
 

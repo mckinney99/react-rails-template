@@ -46,13 +46,13 @@ const destroyToken = () => localStorage.removeItem('token');
 const userApi = {
   getCurrentUser: async () => {
     try {
-      const response: AxiosResponse = await axios.get(
+      const response: AxiosResponse = await axiosWithAuth.get(
         `${BASE_URL}/current_user`
       );
       return response.data;
     } catch (error) {
       handleError();
-      throw error;
+      // throw error;
     }
   },
 

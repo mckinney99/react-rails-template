@@ -79,6 +79,17 @@ UserSerializer.new(resource).serializable_hash[:data].map{|data| data[:attribute
 We use: https://github.com/jsonapi-serializer/jsonapi-serializer
 
 
+If you get an activesupport error similar to `usr/local/bundle/gems/activesupport-7.1.2/lib/active_support/messages/codec.rb:57:in%20%60catch_and_raise':%20missing%20separator`
+
+You just need to delete and re-create new credentials:
+
+`cd backend`
+
+`rm -rf config/credentials.yml.enc`
+
+`  EDITOR="mate --wait" bin/rails credentials:edit`
+
+
 
 ## Other
 

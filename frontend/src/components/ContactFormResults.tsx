@@ -15,7 +15,7 @@ const ContactFormResults: React.FC = () => {
     } catch (error) {
       console.error('Error getting message:', error);
     }
-  };
+  }; //
 
   return (
     <>

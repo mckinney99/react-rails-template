@@ -69,6 +69,8 @@ const NavigationMenu: React.FC = () => {
     </Popover>
   );
 
+  console.log('test')
+
   return (
     <Center bg="blue.500" color="white" p={4} display="flex">
       <Text ml={10} fontSize="xl" fontWeight="bold">
@@ -89,14 +91,17 @@ const NavigationMenu: React.FC = () => {
         >
           Home
         </ChakraLink>
-        <ChakraLink
-          as={ReactRouterLink}
-          to="/admin"
-          mr={12}
-          _hover={{ textDecoration: 'none' }}
-        >
-          Admin
-        </ChakraLink>
+        {user?.role?.admin && (
+          <ChakraLink
+            as={ReactRouterLink}
+            to="/admin"
+            mr={12}
+            _hover={{ textDecoration: 'none' }}
+          >
+            Admin
+          </ChakraLink>
+          )
+        }
         <ChakraLink mr={12} _hover={{ textDecoration: 'none' }}>
           About
         </ChakraLink>

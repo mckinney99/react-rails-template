@@ -1,56 +1,59 @@
 .DS_Store
 
-####### backend #######
+#######  #######
 # Ignore bundler config.
-backend/.bundle
+/.bundle
 
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
-backend/log/*
-backend/tmp/*
-!/backend/log/.keep
-!/backend/tmp/.keep
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
-backend/tmp/pids/*
-!/backend/tmp/pids/
-!/backend/tmp/pids/.keep
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
 
 # Ignore uploaded files in development.
-backend/storage/*
-!/backend/storage/.keep
-backend/tmp/storage/*
-!/backend/tmp/storage/
-!/backend/tmp/storage/.keep
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/
+!/tmp/storage/.keep
+/tmp/cache
+/tmp/db
 
 # Ignore master key for decrypting credentials and more.
-backend/config/master.key
-backend/.env
+/config/master.key
+/.env
 
-backend/.DS_Store
-backend/.byebug_history
+/.DS_Store
+/.byebug_history
 
 
-####### frontend #######
+#######  #######
 # dependencies
-frontend/node_modules
-frontend/.pnp
-frontend/.pnp.js
+/node_modules
+node_modules
+/.pnp
+/.pnp.js
 
 # testing
-frontend/coverage
+/coverage
 
 # production
-frontend/build
+/build
 
 # misc
-frontend/.DS_Store
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
+/npm-debug.log*
+/yarn-debug.log*
+/yarn-error.log*

@@ -19,7 +19,6 @@ export default function AppRoutes() {
       <Route element={<RequireAuth role={'admin'} />}>
         <Route path="/admin" element={<Admin />} />
       </Route>
-      {/* {user?.role?.admin ? <Route path="/admin" element={<Admin />} /> : null} */}
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

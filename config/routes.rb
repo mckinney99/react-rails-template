@@ -22,7 +22,13 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'hello_world', to: 'sample#hello_world'
       resources :messages, only: [:index, :show, :create, :update, :destroy]
-
+      resources :payments, only: [] do
+        collection do
+          post 'create_payment_intent'
+          # post 'confirm_payment'
+          # post 'cancel_payment'
+        end
+      end
     end
   end
 end

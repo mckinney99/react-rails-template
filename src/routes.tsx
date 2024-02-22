@@ -6,12 +6,16 @@ import ContactFormPage from './pages/ContactFormPage';
 import Admin from './pages/Admin';
 import RequireAuth from './components/RequireAuth';
 import LoginForm from './components/LoginForm';
+import Stripe from './components/Stripe';
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<RequireAuth />}>
         <Route path="/" element={<Home />} />
+      </Route>
+      <Route element={<RequireAuth />}>
+        <Route path="/pay" element={<Stripe />} />
       </Route>
       <Route path="/contact" element={<ContactFormPage />} />
       <Route path="/sign-up" element={<SignUp />} />

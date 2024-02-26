@@ -15,7 +15,7 @@ export default function AppRoutes() {
         <Route path="/" element={<Home />} />
       </Route>
       <Route element={<RequireAuth />}>
-        <Route path="/pay" element={<Stripe />} />
+        <Route path="/pay" element={<Stripe amount={100} currency={'usd'}/>} />
       </Route>
       <Route path="/contact" element={<ContactFormPage />} />
       <Route path="/sign-up" element={<SignUp />} />
@@ -23,7 +23,6 @@ export default function AppRoutes() {
       <Route element={<RequireAuth role={'admin'} />}>
         <Route path="/admin" element={<Admin />} />
       </Route>
-      {/* {user?.role?.admin ? <Route path="/admin" element={<Admin />} /> : null} */}
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

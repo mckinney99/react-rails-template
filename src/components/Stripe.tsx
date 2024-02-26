@@ -1,14 +1,14 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { StripeElementsOptions, loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './CheckoutForm';
-import { paymentApi } from '../apis/paymentApi';
+import { Currency, paymentApi } from '../apis/paymentApi';
 import { useEffect, useState } from 'react';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
-export default function App() {
+const stripePublishableKey = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+const stripePromise = loadStripe(stripePublishableKey);
+
+export default function App({amount, currency}: {amount: number, currency?: Currency}) {
   const [clientSecret, setClientSecret] = useState<string>();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function App() {
 
   const handleGetClientSecret = async () => {
     try {
-      const response = await paymentApi.createPaymentIntent();
+      const response = await paymentApi.createPaymentIntent({amount, currency});
       
       setClientSecret(response?.client_secret ?? null);
     } catch (error) {

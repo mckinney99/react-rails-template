@@ -5,7 +5,10 @@ import { Currency, paymentApi } from '../apis/paymentApi';
 import { useEffect, useState } from 'react';
 
 
-const stripePublishableKey = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+// const stripePublishableKey = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+console.log(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+
+const stripePublishableKey = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string
 const stripePromise = loadStripe(stripePublishableKey);
 
 export default function App({amount, currency}: {amount: number, currency?: Currency}) {

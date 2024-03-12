@@ -32,7 +32,7 @@ rails server will be on port 3000
 React app is on port 4000
 
 To back into the rails console run:
-`docker exec -it rr-template-backend-1 bash`
+`docker exec -it react-rails-template-backend-1 bash`
 use `docker ps` to get the container name if needed ^^
 
 Then once bashed in, run `bundle exec rails c`U

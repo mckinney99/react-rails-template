@@ -1,7 +1,7 @@
 Current functionality.
 - Currently, logging in and siging up work, but nothing changes once a user is signed in.
 - Any visitor can create a 'message' using the contact form on the frontend. See how messages are being implemented to get an idea of how Redux and Rails are working together. We want to follow this pattern going forward when adding additional features.
-- All endpoints should be working minus the current_user endpoint which I am actively working on to retrive the current logged in users data.
+- All endpoints should be working minus the current_user endpoint which I am/was actively working on to retrive the current logged in users data.
 - Only logged in users can see the contact form results on the homepage
 - Only admins can see the 'admin' page
 
